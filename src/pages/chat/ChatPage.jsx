@@ -43,12 +43,12 @@ export default function ChatPage() {
                 newMessage.userId === prev.otherUser?._id ||
                 newMessage.userId === user._id;
 
-                if(isMatch) {
-                    return{
-                        ...prev,
-                        conversationId: newMessage.conversationId
-                    }
+            if(isMatch) {
+                return{
+                    ...prev,
+                    conversationId: newMessage.conversationId
                 }
+            }
             return prev;
         })
     }, [user?._id])

@@ -22,7 +22,7 @@ import { useUsersProvider } from '../../providers/UsersProvider';
 
 export default function AdminCardsPanel() {
 
-  const {loading, getUsers} = useUsersProvider();
+  const {loading, getUsers, users} = useUsersProvider();
   const {registeredCards, refreshFeed, fetchCards, handleDeleteCard, handleBanCard} = useCardsProvider();
   const [selectedCardId, setSelectedCardId] = useState(null);
   
@@ -45,7 +45,6 @@ export default function AdminCardsPanel() {
     const [categoryFilter, setCategoryFilter] = useState('');
 
     const {user} = useAuth();
-    const {users} = useUsers(); 
     const {favoriteCards} = useFavoriteCards();
 
 
