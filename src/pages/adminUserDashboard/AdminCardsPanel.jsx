@@ -19,7 +19,6 @@ import OnLoadingSkeletonBox from '../../components/OnLoadingSkeletonBox';
 import { useUsersProvider } from '../../providers/UsersProvider';
 
 
-
 export default function AdminCardsPanel() {
 
   const {loading, getUsers, users} = useUsersProvider();
