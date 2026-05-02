@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getSocket } from '../services/socketService';
 import { useAuth } from '../providers/AuthProvider';
-import { deleteChat, getChats, getSingleChatMessages } from '../services/apiService';
+import { deleteChat, getChats, getSingleChatMessages, uploadChatMedia } from '../services/apiService';
 
 function useChat(
     selectedConversationId, 
@@ -34,8 +34,18 @@ function useChat(
         }
     }
 
-    const handleSendNewMessage = (message) => {
-        getSocket().emit('send-message', message)
+    const handleSendNewMessage = async (message) => {
+        if(message.mediaFile){
+            const formData = new FormData();
+                formData.append('media', message.mediaFile);
+                formData.append('toUser', message.toUser);
+                formData.append('text', message.text);
+
+            await uploadChatMedia(formData)   
+        }
+        else{
+            getSocket().emit('send-message', message)
+        }
     }
 
     const handleDeleteChat = async (conversationId) => {

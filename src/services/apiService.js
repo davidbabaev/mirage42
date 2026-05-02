@@ -92,4 +92,6 @@ export const deleteOneNotification = (id) => httpRequest(`/notifications/${id}`,
 export const getChats = () => httpRequest(`/chats`, 'GET');
 export const getSingleChatMessages = (id) => httpRequest(`/messages/${id}`, 'GET');
 export const deleteChat = (conversationId) => httpRequest(`/chats/${conversationId}`, 'DELETE');
+export const uploadChatMedia = (formData) => httpRequestFormData('/chat/upload-media', 'POST', formData);
+
 

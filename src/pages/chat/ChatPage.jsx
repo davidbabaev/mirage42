@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useChat from '../../hooks/useChat'
 import { useAuth } from '../../providers/AuthProvider';
-import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, Menu, MenuItem, Paper, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, Menu, MenuItem, Paper, TextField, Tooltip, Typography } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import getTimeAgo from '../../utils/getTimeAgo';
@@ -17,6 +17,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUsersProvider } from '../../providers/UsersProvider';
 import MediaDisplay from '../../components/MediaDisplay';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function ChatPage() {
 
@@ -34,13 +36,16 @@ export default function ChatPage() {
     }, [mediaFile])
 
     const fileInputRef = useRef(null); // hidden input holding
-
+    
+    // the cleanup function that cptured previewMedia from the previous render. it revokes the old URL - not the new one that just got created.
     useEffect(() => {
         return () => {
             if(previewMedia) URL.revokeObjectURL(previewMedia)
-        } 
+            } 
     }, [previewMedia])
 
+    // console.log('mediaFile:', mediaFile), 'preview media:', previewMedia;
+    
 
     const handleConversationDeleted = useCallback((deletedId) => {
         setSelectedChat(prev => {
@@ -82,6 +87,17 @@ export default function ChatPage() {
         handleConversationDeleted, 
         handleMessageReceived
     );
+
+    const handleSend = () => {
+        handleSendNewMessage({
+            text: messageText,
+            toUser: selectedChat.otherUser._id,
+            mediaFile: mediaFile,
+        })
+        setMessageText('');
+        setMediaFile(null)
+        fileInputRef.current.value = ''
+    }
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -477,16 +493,55 @@ return (
                             </Box>
                         )
                     })}
-                    <IconButton 
-                        sx={{
-                            position: 'sticky', 
-                            bottom: 0
-                        }}>
-                        <KeyboardArrowDownIcon/>
-                    </IconButton>
                     {/* invisble market at the bottom */}
                     <Box ref={messageEndRef}/>
                 </Box>
+
+                {/* media preview */}   
+                {previewMedia && (
+                    <Box sx={{position: 'relative', m:1}}>
+                        
+                        {/* Floating Buttons over image */}
+                        <Box 
+                            sx={{
+                                display: 'flex', 
+                                gap: 0.5,
+                                position: 'absolute',
+                                left: 5,
+                                top: 5,
+                                zIndex: 1000
+                            }}>
+                            <Tooltip title = "Remove Media">
+                                <IconButton 
+                                    onClick={() => {
+                                        setMediaFile(null);
+                                        fileInputRef.current.value = '';
+                                    }}
+                                    sx={{
+                                        color: 'white',
+                                        bgcolor: 'rgba(0,0,0,0.4)',
+                                        borderRadius: 3,
+                                        p: 0.5
+                                    }}
+                                >
+                                        <CloseIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
+    
+                        <MediaDisplay
+                            mediaType={mediaFile.type.startsWith('video/') ? 'video' : 'image'}
+                            mediaUrl={previewMedia}
+                            style={{
+                                maxWidth: 200,
+                                maxHeight: 150,
+                                borderRadius: '10px',
+                                objectFit: 'cover',
+                                display: 'block'
+                            }}
+                        />
+                    </Box>
+                )}
 
                 {/* Bottom: text input + send button */}
                 <Box 
@@ -499,8 +554,31 @@ return (
                         borderColor: 'divider'
                     }}
                 >
-                    <ImageIcon sx={{color: 'text.secondary', mb: 1, cursor: 'pointer'}}/>
-                    <VideocamIcon sx={{color: 'text.secondary', mb: 1, cursor: 'pointer'}}/>
+                    <input
+                        ref={fileInputRef}
+                        type='file'
+                        accept='image/*,video/*'
+                        onChange={(e) => setMediaFile(e.target.files[0])}
+                        style={{display: 'none'}}
+                    />
+
+                    <IconButton
+                        onClick={() => {
+                            fileInputRef.current.accept = 'image/*';
+                            fileInputRef.current.click();
+                        }}
+                    >
+                        <ImageIcon sx={{color: 'text.secondary'}}/>
+                    </IconButton>
+
+                    <IconButton
+                        onClick={() => {
+                            fileInputRef.current.accept = 'video/*';
+                            fileInputRef.current.click();
+                        }}
+                    >
+                        <VideocamIcon sx={{color: 'text.secondary'}}/>
+                    </IconButton>
 
                     <TextField
                         fullWidth
@@ -513,12 +591,8 @@ return (
                         onKeyDown={(e) => {
                             if(e.key === 'Enter' && !e.shiftKey && messageText.trim()){
                                 e.preventDefault()
-                                handleSendNewMessage({
-                                    text: messageText,
-                                    toUser: selectedChat.otherUser._id
-                                })
-                                    setMessageText('')
-                                }}
+                                handleSend()
+                            }}
                             }
                         slotProps={{
                             input: {
@@ -545,14 +619,8 @@ return (
                         }}
                     />
                     <IconButton 
-                        disabled={!messageText.trim()}
-                        onClick={() => {
-                            handleSendNewMessage({
-                                text: messageText,
-                                toUser: selectedChat.otherUser._id
-                            })
-                            setMessageText('')
-                        }}
+                        disabled={!messageText.trim() && !mediaFile}
+                        onClick={handleSend}
                         sx={{
                             bgcolor: 'primary.main',
                             color: 'white',

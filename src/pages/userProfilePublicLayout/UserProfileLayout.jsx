@@ -381,7 +381,7 @@ export default function UserProfileLayout() {
                                   top: 0,
                                   right: 0,
                                   m: 1,
-                                  bgcolor: 'background.paper',
+                                  bgcolor: 'background.paper', 
                                   zIndex: 1100
                                 }}
                               >
