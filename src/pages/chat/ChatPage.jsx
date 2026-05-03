@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useChat from '../../hooks/useChat'
 import { useAuth } from '../../providers/AuthProvider';
 import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, Menu, MenuItem, Paper, TextField, Tooltip, Typography } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import getTimeAgo from '../../utils/getTimeAgo';
 import MessageIcon from '@mui/icons-material/Message';
@@ -19,6 +19,8 @@ import { useUsersProvider } from '../../providers/UsersProvider';
 import MediaDisplay from '../../components/MediaDisplay';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useUI } from '../../providers/UIProvider';
 
 export default function ChatPage() {
 
@@ -27,15 +29,22 @@ export default function ChatPage() {
     const navigate = useNavigate();
     const {user} = useAuth();
     const {users} = useUsersProvider();
-
+    const {setIsChatOpen} = useUI();
+    
     // Media handling
     const [mediaFile, setMediaFile] = useState(null);
-
+    
     const previewMedia = useMemo(() => {
         return mediaFile ? URL.createObjectURL(mediaFile) : null;
     }, [mediaFile])
-
+    
     const fileInputRef = useRef(null); // hidden input holding
+
+    useEffect(() => {
+        setIsChatOpen(!!selectedChat);
+        // when leaving the chat page entierly, reset the flag
+        return () => setIsChatOpen(false);
+    }, [selectedChat, setIsChatOpen])
     
     // the cleanup function that cptured previewMedia from the previous render. it revokes the old URL - not the new one that just got created.
     useEffect(() => {
@@ -188,6 +197,7 @@ export default function ChatPage() {
             })
             
             handleOpenConversation(conversation._id)
+            setSearchParams({}, {replace: true})
         }
         else{
             const otherNewUserTo = users.find(u => u._id === toUserId);
@@ -201,15 +211,26 @@ export default function ChatPage() {
             })
         }
 
-        setSearchParams({}, {replace: true})
 
     }, [toUserId, conversationsList, user, users])
 
 return (
-<Container maxWidth='lg' sx={{py:3, pb: {xs: 20, md: 3}}}>
-<Grid container spacing={3}>
+<Container 
+    maxWidth='lg' 
+    sx={{
+        py: 3,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+    }}>
+<Grid container spacing={3} sx={{flex: 1, minHeight: 0}}>
     {/* Chats left side */}
-    <Grid size={{xs: 12, md:4}}>
+    <Grid size={{xs: 12, md:4}} 
+        sx={{
+            height: '100%',
+            display: {xs: selectedChat ? 'none' : 'block', md: 'block'}
+        }}>
         <Paper
             elevation={0}
             sx={{
@@ -217,7 +238,7 @@ return (
                 borderColor: 'divider',
                 borderRadius: 3,
                 overflow: 'hidden',
-                height: {xs: '80dvh', md: '80vh'},
+                height: '100%',
                 display: 'flex',
                 flexDirection: 'column'
             }}
@@ -320,16 +341,21 @@ return (
     </Grid>
 
     {/* chat messages - right side */}
-    <Grid size={{md:8}}>
+    <Grid size={{xs: 12,md:8}} sx={{
+        height: '100%',
+        display: {
+            xs: selectedChat ? 'block' : 'none', md: 'block'
+        }
+    }}>
         {selectedChat ? (
             <Box
                 sx={{
-                    height: '80vh',
+                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     border: '1px solid',
                     borderColor: 'divider',
-                    // borderRadius: 3,
+                    borderRadius: 3,
                 }}
             >
                 {/* Top: header with the other user's name */}
@@ -341,7 +367,16 @@ return (
                     display: 'flex',
                     alignItems: 'center',
                     gap: 1.5,
+                    borderRadius: '10px 10px 0px 0px'
                 }}>
+                    {selectedChat && (
+                        <IconButton 
+                            sx={{display: {xs: 'block', md:'none'}, p:0}}
+                            onClick={() => setSelectedChat(null)}
+                        >
+                            <ArrowBackIcon/>
+                        </IconButton>
+                    )}
                     <Avatar
                         src= {selectedChat.otherUser?.profilePicture}
                         onClick={() => navigate(`/profiledashboard/${selectedChat.otherUser?._id}/profilemain`)}

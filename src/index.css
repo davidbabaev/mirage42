@@ -3,6 +3,11 @@
   outline: none;
 }
 
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
 /* target the scroll bar itself - controls width (vertical) and height (horizontal) */
 ::-webkit-scrollbar {
   width: 8px;
