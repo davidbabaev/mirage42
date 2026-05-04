@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useChat from '../../hooks/useChat'
 import { useAuth } from '../../providers/AuthProvider';
-import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, Menu, MenuItem, Paper, TextField, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, Grid, Icon, IconButton, InputAdornment, Menu, MenuItem, Paper, TextField, Tooltip, Typography } from '@mui/material';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import getTimeAgo from '../../utils/getTimeAgo';
@@ -21,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useUI } from '../../providers/UIProvider';
+import EmojiPicker from 'emoji-picker-react';
 
 export default function ChatPage() {
 
@@ -30,6 +31,13 @@ export default function ChatPage() {
     const {user} = useAuth();
     const {users} = useUsersProvider();
     const {setIsChatOpen} = useUI();
+
+    // emoji
+    const [isEmojiOpen, setIsEmojiOpen] = useState(false);
+    const onEmojiClick = (emojiData) => {
+        setMessageText(prev => prev + emojiData.emoji);
+        setIsEmojiOpen(false);
+    }
     
     // Media handling
     const [mediaFile, setMediaFile] = useState(null);
@@ -41,7 +49,10 @@ export default function ChatPage() {
     const fileInputRef = useRef(null); // hidden input holding
 
     useEffect(() => {
+        // If selectedChat is an object (a chat is open) → !!selectedChat = true
+        // If selectedChat is null (no chat open) → !!selectedChat = false
         setIsChatOpen(!!selectedChat);
+
         // when leaving the chat page entierly, reset the flag
         return () => setIsChatOpen(false);
     }, [selectedChat, setIsChatOpen])
@@ -218,11 +229,12 @@ return (
 <Container 
     maxWidth='lg' 
     sx={{
-        py: 3,
+        py: {xs: 0, md: 3},
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        p:{xs: 0, md: 4}
     }}>
 <Grid container spacing={3} sx={{flex: 1, minHeight: 0}}>
     {/* Chats left side */}
@@ -234,13 +246,14 @@ return (
         <Paper
             elevation={0}
             sx={{
-                border: '0.5px solid',
-                borderColor: 'divider',
-                borderRadius: 3,
+                border: {xs: '0', md: '0.5px solid'},
+                borderColor: {md: 'divider'},
+                borderRadius: {xs: 0, md: 3},
                 overflow: 'hidden',
                 height: '100%',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                pb: {xs: 8, md: 0}
             }}
         >
 
@@ -353,9 +366,9 @@ return (
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    border: '1px solid',
-                    borderColor: 'divider',
-                    borderRadius: 3,
+                    border: {xs: '0', md:'1px solid'},
+                    borderColor: {md:'divider'},
+                    borderRadius: {xs: 0, md: 3},
                 }}
             >
                 {/* Top: header with the other user's name */}
@@ -584,7 +597,7 @@ return (
                         p: 2, 
                         display: 'flex', 
                         gap: 1, 
-                        alignItems: 'end',
+                        alignItems: 'center',
                         borderTop: '0.5px solid',
                         borderColor: 'divider'
                     }}
@@ -598,6 +611,7 @@ return (
                     />
 
                     <IconButton
+                        sx={{p:0.3}}
                         onClick={() => {
                             fileInputRef.current.accept = 'image/*';
                             fileInputRef.current.click();
@@ -607,6 +621,7 @@ return (
                     </IconButton>
 
                     <IconButton
+                        sx={{p:0.3}}
                         onClick={() => {
                             fileInputRef.current.accept = 'video/*';
                             fileInputRef.current.click();
@@ -636,10 +651,15 @@ return (
                                         position='start'
                                         sx={{
                                             alignSelf: 'flex-end',
-                                            cursor: 'pointer'
+                                            cursor: 'pointer',
+                                            display: {xs: 'none', md: 'flex'}
                                         }}
                                     >
-                                        <EmojiEmotionsIcon/>
+                                        <IconButton onClick={() => {
+                                            setIsEmojiOpen(!isEmojiOpen)
+                                        }}>
+                                            <EmojiEmotionsIcon/>
+                                        </IconButton>
                                     </InputAdornment>
                                 )
                             }
@@ -653,6 +673,20 @@ return (
                             }
                         }}
                     />
+                    {isEmojiOpen && (
+                        <Box sx={{
+                            position: 'fixed',  
+                            bottom: '80px', 
+                            left: {xs: 0,md:'50%'},
+                            zIndex: 1050, 
+                            transform: 'translateX(-50)', 
+                            display: {xs: 'none', md: 'block'
+                        }}}>
+                            <EmojiPicker
+                                onEmojiClick={onEmojiClick}
+                            />
+                        </Box>
+                    )}
                     <IconButton 
                         disabled={!messageText.trim() && !mediaFile}
                         onClick={handleSend}

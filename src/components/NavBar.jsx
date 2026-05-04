@@ -16,6 +16,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import CreateCardModal from './CreateCardModal';
 import MirageLogo from '../assets/MirageLogo';
 import MessageIcon from '@mui/icons-material/Message';
+import { useUI } from '../providers/UIProvider';
 
 export default function NavBar() {
 
@@ -27,6 +28,8 @@ export default function NavBar() {
     const profileRef = useRef(null);
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {setIsChatOpen, isChatOpen} = useUI();
+    
 
     // mobile scroll logic:
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(true);
@@ -286,7 +289,7 @@ export default function NavBar() {
             bottom: 0,
             width:'100%',
             px: 2,
-            display: {xs: 'flex', md: 'none'},
+            display: {xs: isChatOpen ? 'none' : 'flex', md: 'none'},
             transform: isBottomBarVisible ? 'translateY(0)' : 'translateY(100%)',
             transition: 'transform 0.3s ease'
         }}

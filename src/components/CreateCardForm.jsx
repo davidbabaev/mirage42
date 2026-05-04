@@ -439,7 +439,14 @@ return (
             </Tooltip>
 
             {isEmojiOpen && 
-                <Box sx={{position: 'fixed',  bottom: '80px', left: {xs: 0,md:'50%'},zIndex: 1050, transform: 'translateX(-50)', display: {xs: 'none', md: 'block'}}}>
+                <Box sx={{
+                    position: 'fixed',  
+                    bottom: '80px', 
+                    left: {xs: 0,md:'50%'},
+                    zIndex: 1050, 
+                    transform: 'translateX(-50)', 
+                    display: {xs: 'none', md: 'block'
+                }}}>
                     <EmojiPicker  
                         onEmojiClick={onEmojiClick}
                     />
