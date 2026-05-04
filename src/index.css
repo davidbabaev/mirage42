@@ -9,9 +9,20 @@ html, body, #root {
 }
 
 /* target the scroll bar itself - controls width (vertical) and height (horizontal) */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+@media (max-width: 600px){
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  *{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* the 'track os the background lane the thumb slides on */

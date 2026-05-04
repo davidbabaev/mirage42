@@ -32,12 +32,13 @@ export default function App(){
         <CardsProvider>
           <UsersProvider>
             <UIProvider>
-              <Box sx={{
-                height: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                overflow: 'auto'
-              }}>
+              <Box 
+                sx={{
+                  height: '100vh',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  // overflow: 'auto'
+                }}>
                 {!(
                   location.pathname.includes('/admindashboard') ||
                   location.pathname.includes('/login') ||
@@ -45,7 +46,14 @@ export default function App(){
                 ) && (
                   <NavBar/>
                 )}
-                <Box sx={{flex: 1, minHeight: 0 , bgcolor: 'Background.default'}}>
+                <Box sx={{
+                  flex: 1, 
+                  minHeight: 0 , 
+                  bgcolor: 'Background.default',
+                  overflow: 'auto'
+                }}
+                  id='app-scroll-container'
+                >
                   <Routes>
                     <Route path='/' element={
                       <ProtectedRoute>

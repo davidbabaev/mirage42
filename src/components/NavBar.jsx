@@ -36,8 +36,11 @@ export default function NavBar() {
     const lastScrollY = useRef(0);
 
     useEffect(() => {
+        const scrollContainer = document.getElementById('app-scroll-container');
+        if(!scrollContainer) return;
+
         const handleScroll = () => {
-            const currentScrollY = window.scrollY;
+            const currentScrollY = scrollContainer.scrollTop;
 
             if(currentScrollY > lastScrollY.current && currentScrollY > 50){
                 setIsBottomBarVisible(false);
@@ -49,8 +52,8 @@ export default function NavBar() {
             lastScrollY.current = currentScrollY;
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll)
+        scrollContainer.addEventListener('scroll', handleScroll);
+        return () => scrollContainer.removeEventListener('scroll', handleScroll)
     }, []);
 
     
