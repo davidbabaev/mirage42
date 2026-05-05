@@ -263,10 +263,10 @@ return (
                 borderBottom: '0.5px solid',
                 borderColor: 'divider'
             }}>
-                <Typography fontWeight={500} fontSize={18} mb={1.5}>
+                <Typography fontWeight={500} fontSize={18}>
                     Messages
                 </Typography>
-                <TextField
+{/*                 <TextField
                     fullWidth
                     size='small'
                     placeholder='Search chat'
@@ -286,7 +286,7 @@ return (
                             bgcolor: 'action.hover'
                         }
                     }}
-                />
+                /> */}
             </Box>
 
 

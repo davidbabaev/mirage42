@@ -21,6 +21,7 @@ import { Box } from '@mui/material'
 import ChatPage from './pages/chat/ChatPage'
 import { UsersProvider } from './providers/UsersProvider'
 import { UIProvider } from './providers/UIProvider'
+import RotateOverlay from './components/style/RotateOverlay'
 
 export default function App(){
 
@@ -32,6 +33,7 @@ export default function App(){
         <CardsProvider>
           <UsersProvider>
             <UIProvider>
+              <RotateOverlay/>
               <Box 
                 sx={{
                   height: '100vh',
