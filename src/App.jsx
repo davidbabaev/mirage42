@@ -22,6 +22,7 @@ import ChatPage from './pages/chat/ChatPage'
 import { UsersProvider } from './providers/UsersProvider'
 import { UIProvider } from './providers/UIProvider'
 import RotateOverlay from './components/style/RotateOverlay'
+import PageNotFound from './pages/PageNotFound'
 
 export default function App(){
 
@@ -84,6 +85,7 @@ export default function App(){
                       </ProtectedRoute>
                     }/>
                     <Route path='/allusers' element ={<UsersPage/>}/>
+                    <Route path='/*' element ={<PageNotFound/>}/>
                     <Route path='/registered' element ={
                       <PublicOnlyRoute>
                         <RegisteredPage/>

@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Alert, Box, Button, Divider, TextField, Typography, useTheme } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import MirageLogo from '../assets/MirageLogo';
-
-  const bgcImg = 'https://4kwallpapers.com/images/walls/thumbs_3t/25869.png'
+import bgImg from '../assets/Gemini_Generated_Image_ssn5lpssn5lpssn5.png'
+import bgImgMobile from '../assets/Gemini_Generated_Image_ssn5lpssn5lpssn5.png'
 
 export default function LoginPage() {
 
@@ -52,7 +52,7 @@ export default function LoginPage() {
       <Box sx={{
         flex: 1,
         minHeight: {xs: '30vh', md:'100vh'},
-        backgroundImage: `url(${bgcImg})`,
+        backgroundImage: {xs: `url(${bgImgMobile})` ,md:`url(${bgImg})`},
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -67,7 +67,7 @@ export default function LoginPage() {
         justifyContent: 'center',
         bgcolor: 'background.paper',
         borderRadius: {xs: 0,md: '24px 0 0 24px'},
-        ml: '-24px',
+        ml: {xs: '0px',md: '-24px'},
         zIndex: 1
       }}>
         {/* Form Card */}

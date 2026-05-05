@@ -113,7 +113,7 @@ export default function NavBar() {
             <Toolbar disableGutters>
                 <Box 
                     onClick={() => navigate('/')} 
-                    sx={{cursor: 'pointer', mr: 4}}
+                    sx={{cursor: 'pointer'}}
                 >
                     <MirageLogo/>
                 </Box>

@@ -175,7 +175,7 @@ export default function AllCardsPage() {
                 size={{xs: 12, md:4}} 
                 sx={{
                     position: {xs: 'fixed', md: 'sticky'},
-                    top: {xs: 0, md: 90},
+                    top: {xs: 0, md: 10},
                     left: {xs: 0, md: 'auto'},
                     width: '100%',
                     height: {xs: '100dvh', md: 'calc(100vh - 94px)'},
