@@ -23,6 +23,8 @@ import { UsersProvider } from './providers/UsersProvider'
 import { UIProvider } from './providers/UIProvider'
 import RotateOverlay from './components/style/RotateOverlay'
 import PageNotFound from './pages/PageNotFound'
+import LandingPage from './documentation/LandingPage'
+import DocsDashboardLayout from './documentation/dashboard/DocsDashboardLayout'
 
 export default function App(){
 
@@ -45,6 +47,8 @@ export default function App(){
                 {!(
                   location.pathname.includes('/admindashboard') ||
                   location.pathname.includes('/login') ||
+                  location.pathname.includes('/about') ||
+                  location.pathname.includes('/docs') ||
                   location.pathname.includes('/register')
                 ) && (
                   <NavBar/>
@@ -62,6 +66,12 @@ export default function App(){
                       <ProtectedRoute>
                         <FeedPage/>
                       </ProtectedRoute>
+                    }/>
+                    <Route path='/about' element={
+                        <LandingPage/>
+                    }/>
+                    <Route path='/docs/*' element={
+                        <DocsDashboardLayout/>
                     }/>
                     <Route path='/admindashboard/*' element={
                       <AdminProtectedRoute> 
