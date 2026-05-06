@@ -23,8 +23,8 @@ import { UsersProvider } from './providers/UsersProvider'
 import { UIProvider } from './providers/UIProvider'
 import RotateOverlay from './components/style/RotateOverlay'
 import PageNotFound from './pages/PageNotFound'
-import LandingPage from './documentation/LandingPage'
-import DocsDashboardLayout from './documentation/dashboard/DocsDashboardLayout'
+import LandingPage from './pages/landing/LandingPage'
+import DocsLayout from './pages/docs/DocsLayout'
 
 export default function App(){
 
@@ -71,7 +71,7 @@ export default function App(){
                         <LandingPage/>
                     }/>
                     <Route path='/docs/*' element={
-                        <DocsDashboardLayout/>
+                        <DocsLayout/>
                     }/>
                     <Route path='/admindashboard/*' element={
                       <AdminProtectedRoute> 
