@@ -1,22 +1,48 @@
 import { Box } from '@mui/material'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Instruction from './pages/Instruction'
+import Introduction from './pages/Introduction'
 import Features from './pages/Features'
 import Technologies from './pages/Technologies'
+import DocsSidebar from './components/DocsSidebar'
+import DocsNavBar from './components/DocsNavBar'
+import DocsPager from './components/DocsPager'
 
 export default function DocsLayout() {
+
   return (
-        <Box>
-        {/* Navbar */}
-        {/* ****** */}
+      <Box sx={{display: 'flex', height: '100vh'}}>
 
+        <DocsSidebar/>
 
-        <Routes>
-            <Route path='/' element={<Instruction/>}/>
-            <Route path='/features' element={<Features/>}/>
-            <Route path='/technologies' element={<Technologies/>}/>
-        </Routes>
-    </Box>
+        <Box sx={{
+          flex: 1,
+          display: 'flex', 
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}>
+          <DocsNavBar/>
+
+          <Box sx={{flex: 1, overflow: 'auto'}}>
+            <Box sx={{
+              minHeight: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              // maxWidth: 800,
+              mx: 'auto',
+              px: 4
+            }}>
+              <Box sx={{flex: 1, py:4}}>
+                <Routes>
+                    <Route path='/' element={<Introduction/>}/>
+                    <Route path='/features' element={<Features/>}/>
+                    <Route path='/technologies' element={<Technologies/>}/>
+                </Routes>
+              </Box>
+            </Box>
+          </Box>
+          <DocsPager/>
+        </Box>
+      </Box>
   )
 }
