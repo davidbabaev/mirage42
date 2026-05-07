@@ -15,6 +15,7 @@ import CardPopupModal from '../components/card/CardPopupModal';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import useFavoriteCards from '../hooks/useFavoriteCards';
 import { useUsersProvider } from '../providers/UsersProvider';
+import FolderIcon from '@mui/icons-material/Folder';
 
 
 export default function FeedPage() {
@@ -248,7 +249,7 @@ export default function FeedPage() {
                                 startIcon={<FavoriteIcon/>}
                                 onClick={() => navigate('/dashboard/myfavorites')}
                                 color='inherit'
-                                sx={{fontSize: 11}}
+                                sx={{fontSize: 13, textTransform: 'none'}}
                             >
                                 Favorite Users
                             </Button>
@@ -259,7 +260,7 @@ export default function FeedPage() {
                                 startIcon={<BookmarkIcon/>}
                                 onClick={() => navigate('/dashboard/myfavoritescards')}
                                 color='inherit'
-                                sx={{fontSize: 11}}
+                                sx={{fontSize: 13, textTransform: 'none'}}
                             >
                                 Favorite Posts
                             </Button>
@@ -270,12 +271,33 @@ export default function FeedPage() {
                                 startIcon={<EditIcon/>}
                                 onClick={() => navigate('/dashboard/myprofile')}
                                 color='inherit'
-                                sx={{fontSize: 11}}
+                                sx={{fontSize: 13, textTransform: 'none'}}
                             >
                                 Edit Profile
                             </Button>
+
                         </Box>
                     </Paper>
+                    <Button sx={{
+                        display: 'flex',
+                        fontSize: 12,
+                        justifyContent: 'center',
+                        color: 'text.secondary',
+                        textTransform: 'none',
+                        textDecoration: 'underline',
+                        '&:hover': {
+                            background: 'transparent'
+                        }
+                    }}
+                        disableRipple
+                        disableFocusRipple
+                        disableTouchRipple
+                        fullWidth
+                        startIcon={<FolderIcon/>}
+                        onClick={() => navigate('/docs')}
+                    >
+                        App Documentation
+                    </Button>
 
                 </Grid>
 

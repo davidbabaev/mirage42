@@ -24,7 +24,7 @@ export default function Introduction() {
   ]
 
   return (
-    <Box sx={{display:'flex', gap: 5, flexWrap: 'wrap'}}>
+    <Box sx={{display:'flex', gap: 5, flexDirection: 'column'}}>
       <Paper 
         elevation={3}
         sx={{p:3, borderRadius: 3}}

@@ -1,7 +1,9 @@
 import React from 'react'
-import { Box, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from '@mui/material'
+import { Box, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import CardDocs from '../components/CardDocs';
+import CheckIcon from '@mui/icons-material/Check';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 export default function Features() {
 
@@ -21,7 +23,7 @@ export default function Features() {
     {label: 'Followers' ,text: 'users who follow this person'},
     {label: 'Following' ,text: 'users this person follows'},
     {label: 'Mutual friends' ,text: 'users that both you and this person follow (on profile sidebar)'},
-    {label: 'Make new friends' ,text: 'users this person follows that you dont yet (suggestions)'},
+    {label: 'Make new friends' ,text: "users this person follows that you don't yet (suggestions)"},
     {label: 'Follow/ unfollow' ,text: 'action'},
     {label: 'Save to favorites' ,text: '(private — only you see your favorites)'},
     {label: 'Message' ,text: 'jumps to chat with this user'},
@@ -29,7 +31,7 @@ export default function Features() {
 
   const feed = [
     {label: 'Following feed' ,text: 'posts from people you follow, sorted by recency'},
-    {label: 'Profile sidbar' ,text: 'your avatar, name, job, location, follower/following/post counts, quick links'},
+    {label: 'Profile sidebar' ,text: 'your avatar, name, job, location, follower/following/post counts, quick links'},
     {label: 'People you may know' ,text: 'suggested users (friends-of-friends) with one-click follow'},
     {label: 'Create post trigger' ,text: 'start a new post directly from the feed'},
   ];
@@ -53,6 +55,18 @@ export default function Features() {
     {text: 'Follow/unfollow directly from the grid card'},
     {text: 'Load more pagination'},
     {text: 'Mobile: filter panel as full-screen drawer'},
+  ];
+
+  const allPosts = [
+    {label: 'Search', text: 'find posts by title, text, category, or creator name (debounced)'},
+    {label: 'Sort', text: 'newest, oldest, most liked, or most commented'},
+    {label: 'Filter by category', text: 'multi-select from 50+ categories, with per-category post counts; empty categories are disabled'},
+    {label: 'Filter by creator', text: 'searchable list of all creators; pick one to see only their posts'},
+    {label: 'Show toggle', text: 'all posts vs your favorite posts only'},
+    {label: 'Active filters', text: 'each active filter shown as a removable chip; "Clear all" button when any filter is on'},
+    {label: 'Load more', text: 'pagination — loads 10 more posts at a time'},
+    {label: 'Click post', text: 'opens the full post modal with media, comments, likes, save (same as feed)'},
+    {label: 'Mobile', text: 'filter panel slides in as a full-screen drawer; toggle with the filter icon'},
   ];
 
   const postInteractions = [
@@ -128,7 +142,7 @@ export default function Features() {
     {text: 'Each row: thumbnail, creator info, title, category, created date, likes, comments, status badge (active / banned)'},
     {label: 'Ban / unban', text: 'action — banned posts are hidden from non-admin views'},
     {label: 'Delete post ', text: 'cascades and removes the post, its likes, comments, and any related notifications'},
-    {label: 'Click row → preview post in a full modal'},
+    {label: 'Click row →', text: 'preview post in a full modal'},
   ];
 
   const uxAndPolish = [
@@ -144,107 +158,174 @@ export default function Features() {
 
   const privateDashboard = [
     {label: 'Profile', text: 'view your own info; edit any field (name, last name, country, city, job, gender, birth date, phone, about me, profile picture, banner image). Country and city are cascading dropdowns powered by a country/cities API'},
-    {label: 'My posts', text: 'all your posts; edit any field on any post (title, category, text, URL, media), or delete the post'},,
+    {label: 'My posts', text: 'all your posts; edit any field on any post (title, category, text, URL, media), or delete the post'},
     {label: 'Favorite users', text: 'users you saved (private to you)'},
     {label: 'Favorite posts', text: 'posts you saved (private to you)'},
     {text: 'Profile completeness alert — banner that nudges you to fill in missing fields'},
   ];
 
+  const permissions = [
+    // Browsing
+    {action: 'View feed (/)',                          guest: false, user: true, admin: true},
+    {action: 'Browse all posts (/allcards)',           guest: true,  user: true, admin: true},
+    {action: 'Browse all users (/allusers)',           guest: true,  user: true, admin: true},
+    {action: 'View any user profile',                  guest: true,  user: true, admin: true},
+    {action: 'View post details',                      guest: true,  user: true, admin: true},
+    {action: 'View landing & docs (/about, /docs)',    guest: true,  user: true, admin: true},
+
+    // Interactions
+    {action: 'Like / unlike a post',                   guest: false, user: true, admin: true},
+    {action: 'Comment on a post',                      guest: false, user: true, admin: true},
+    {action: 'Save post / user to favorites',          guest: false, user: true, admin: true},
+    {action: 'Follow / unfollow users',                guest: false, user: true, admin: true},
+    {action: 'Send messages (chat)',                   guest: false, user: true, admin: true},
+
+    // Own content
+    {action: 'Create post',                            guest: false, user: true, admin: true},
+    {action: 'Edit own post',                          guest: false, user: true, admin: true},
+    {action: 'Delete own post',                        guest: false, user: true, admin: true},
+    {action: 'Edit own profile',                       guest: false, user: true, admin: true},
+    {action: 'Delete own account',                     guest: false, user: true, admin: false},
+    {action: 'Delete own comment',                     guest: false, user: true, admin: true},
+    {action: 'Delete any comment on own post',         guest: false, user: true, admin: true},
+
+    // Moderation (admin-only)
+    {action: 'Access admin dashboard',                 guest: false, user: false, admin: true},
+    {action: 'Delete any user',                        guest: false, user: false, admin: true},
+    {action: 'Ban / unban any user',                   guest: false, user: false, admin: true},
+    {action: 'Promote / demote any user',              guest: false, user: false, admin: true},
+    {action: 'Delete any post',                        guest: false, user: false, admin: true},
+    {action: 'Ban / unban any post',                   guest: false, user: false, admin: true},
+    {action: 'Delete any comment',                     guest: false, user: false, admin: true},
+  ];
+
+
 
   return (
     <Box sx={{display: 'flex', flexDirection: 'column'}}>
-      <Box sx={{display:'flex', gap: 5, flexWrap: 'wrap'}}>
+      <Box sx={{display:'flex', gap: 5, flexDirection: 'column'}}>
         <CardDocs
           title={'Authentication'}
-          text={authentication.text}
           array={authentication}
         />
 
         <CardDocs
           title={'Public Profile'}
-          label={publicProfile.label}
-          text={publicProfile.text}
           array={publicProfile}
         />
 
         <CardDocs
           title={'Feed'}
-          label={feed.label}
-          text={feed.text}
           array={feed}
         />
 
         <CardDocs
           title={'Create post'}
-          text={createPost.text}
           array={createPost}
         />
 
         <CardDocs
           title={'Private dashboard'}
-          label={privateDashboard.label}
-          text={privateDashboard.text}
           array={privateDashboard}
         />
 
         <CardDocs
           title={'All users (/allusers)'}
-          text={allUsers.text}
           array={allUsers}
         />
 
         <CardDocs
+          title={'All posts (/allcards)'}
+          array={allPosts}
+        />
+
+        <CardDocs
           title={'Post interactions'}
-          label={postInteractions.label}
-          text={postInteractions.text}
           array={postInteractions}
         />
 
         <CardDocs
           title={'Real-time chat (Socket.IO)'}
-          text={realTimeChat.text}
           array={realTimeChat}
         />
 
         <CardDocs
           title={'Notifications'}
-          text={notifications.text}
           array={notifications}
         />
 
         <CardDocs
           title={'Theming'}
-          text={theme.text}
           array={theme}
         />
 
         <CardDocs
-          title={'UX & pulish'}
-          text={uxAndPolish.text}
+          title={'UX & polish'}
           array={uxAndPolish}
         />
       </Box>
 
       <Divider sx={{my: 3}}/>
+      <Typography pb={3} fontSize={20} fontWeight={700}>
+        Premissions matrix
+      </Typography>
+
+      <TableContainer component={Paper} elevation={3} sx={{borderRadius: 3, p: 3}}>
+        <Table size='small'>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{fontWeight: 700, fontSize: 14}}>Action</TableCell>
+              <TableCell align='center' sx={{fontWeight: 700, fontSize: 14}}>Guest</TableCell>
+              <TableCell align='center' sx={{fontWeight: 700, fontSize: 14}}>User</TableCell>
+              <TableCell align='center' sx={{fontWeight: 700, fontSize: 14}}>Admin</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {permissions.map((row) => (
+              <TableRow key={row.action}>
+                <TableCell sx={{fontSize: 14}}>{row.action}</TableCell>
+                <TableCell 
+                  align='center'
+                  sx={{color: row.guest ? 'success.main' : 'text.disabled'}}
+                >
+                  {row.guest ? <CheckIcon/> : <RemoveIcon/>}
+                </TableCell>
+
+                <TableCell 
+                  align='center'
+                  sx={{color: row.user ? 'success.main' : 'text.disabled'}}
+                >
+                  {row.user ? <CheckIcon/> : <RemoveIcon/>}
+                </TableCell>
+
+                <TableCell 
+                  align='center'
+                  sx={{color: row.admin ? 'success.main' : 'text.disabled'}}
+                >
+                  {row.admin ? <CheckIcon/> : <RemoveIcon/>}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+
+      <Divider sx={{my: 3}}/>
       <Typography pb={3} fontSize={20} fontWeight={700}>Admin panel (admin-only)</Typography>
 
-      <Box sx={{display:'flex', gap: 5, flexWrap: 'wrap'}}>
+      <Box sx={{display:'flex', gap: 5, flexDirection: 'column'}}>
         <CardDocs
           title={'Overview dashboard'}
-          label={overviewDashboard.label}
-          text={overviewDashboard.text}
           array={overviewDashboard}
         />
         <CardDocs
           title={'Users table'}
-          label={usersTable.label}
-          text={usersTable.text}
           array={usersTable}
         />
         <CardDocs
           title={'Post table'}
-          label={postsTable.label}
-          text={postsTable.text}
           array={postsTable}
         />
       </Box>

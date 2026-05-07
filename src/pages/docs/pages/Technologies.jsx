@@ -41,10 +41,10 @@ export default function Technologies() {
   ]
 
   return (
-    <Box sx={{display:'flex', gap: 5, flexWrap: 'wrap'}}>
+    <Box sx={{display:'flex', gap: 3, flexWrap:'wrap'}}>
       <Paper 
         elevation={3}
-        sx={{p:3, borderRadius: 3}}
+        sx={{p:3, borderRadius: 3,  width: 300}}
       >
         <Typography fontSize={18} fontWeight={700}>Backend technologies</Typography>
         <Typography fontSize={14}>
@@ -81,11 +81,15 @@ export default function Technologies() {
         </Typography>
         <Box sx={{display: 'flex', pb: 0.5}}>
             <ArrowRightIcon/>
-            <Typography sx={{fontSize: 14}}>https://restcountries.com/v3.1/all?fields=name,cca2,flags</Typography>
+            <Typography sx={{fontSize: 14}}>
+              https://restcountries.com/v3.1
+            </Typography>
         </Box>
         <Box sx={{display: 'flex', pb: 0.5}}>
             <ArrowRightIcon/>
-            <Typography sx={{fontSize: 14}}>https://countriesnow.space/api/v0.1/countries/cities</Typography>
+            <Typography sx={{fontSize: 14}}>
+              https://countriesnow.space/api
+            </Typography>
         </Box>
       </Paper>
 

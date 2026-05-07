@@ -17,8 +17,8 @@ export default function DocsPager() {
     <Box sx={{
       display: 'flex',
       justifyContent: 'space-between',
-      p: 2,
-      mt: 4,
+      p: 1,
+      // mt: 4,
       borderTop: '1px solid',
       borderTopColor: 'divider'
     }}>
@@ -30,7 +30,7 @@ export default function DocsPager() {
               display: 'flex',
               alignItems: 'center',
               gap: 2,
-              p: 2,
+              p: 1,
               border: '1px solid',
               borderColor: 'divider',
               borderRadius: 3,
@@ -41,7 +41,7 @@ export default function DocsPager() {
             <ArrowBackIcon/>
             <Box>
               <Typography fontSize={11} color='text.secondary'>Previous</Typography>
-              <Typography fontWeight={600}>{prevPage.label}</Typography>
+              <Typography sx={{fontSize: {xs: 13, md: 16}}} fontWeight={600}>{prevPage.label}</Typography>
             </Box>
           </Box>
         ) : (
@@ -56,7 +56,7 @@ export default function DocsPager() {
               display: 'flex',
               alignItems: 'center',
               gap: 2,
-              p: 2,
+              p: 1,
               border: '1px solid',
               borderColor: 'divider',
               borderRadius: 3,
@@ -67,7 +67,7 @@ export default function DocsPager() {
           >
             <Box>
               <Typography fontSize={11} color='text.secondary'>Next</Typography>
-              <Typography fontWeight={600}>{nextPage.label}</Typography>
+              <Typography sx={{fontSize: {xs: 13, md: 16}}} fontWeight={600}>{nextPage.label}</Typography>
             </Box>
             <ArrowForwardIcon/>
           </Box>

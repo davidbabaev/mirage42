@@ -13,7 +13,9 @@ export default function DocsLayout() {
   return (
       <Box sx={{display: 'flex', height: '100vh'}}>
 
-        <DocsSidebar/>
+        <Box sx={{height: '100vh', display:{xs: 'none', md: 'block'}}}>
+          <DocsSidebar/>
+        </Box>
 
         <Box sx={{
           flex: 1,
@@ -28,9 +30,9 @@ export default function DocsLayout() {
               minHeight: '100%',
               display: 'flex',
               flexDirection: 'column',
-              // maxWidth: 800,
-              mx: 'auto',
-              px: 4
+              maxWidth: {xs: '100%',md: 1000},
+              // mx: 'auto',
+              px: {xs: 1, md:4}
             }}>
               <Box sx={{flex: 1, py:4}}>
                 <Routes>
