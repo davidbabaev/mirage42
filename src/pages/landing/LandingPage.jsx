@@ -197,42 +197,76 @@ export default function LandingPage() {
             </Stack>
 
             {/* CTAs */}
-            <Stack direction="row" spacing={2}>
-                      <Button 
-            startIcon={<GitHubIcon/>} 
-            variant='contained'
-            href='https://github.com/davidbabaev'
-            target='_blank'
-            rel='noreferrer'
-          >
-            GitHub
-          </Button>
-        <Button 
-            startIcon={<YouTubeIcon/>} 
-            variant='contained'
-            href='https://www.youtube.com/@david_kingdom'
-            target='_blank'
-            rel='noreferrer'
-            >
-            Youtube
-          </Button>
-        <Button 
-            startIcon={<AddToDriveIcon/>} 
-            variant='contained'
-            href='https://drive.google.com/drive/folders/1h584KX_ducyfIwFz0EIE_QAz140hP7n2?usp=sharing'
-            target='_blank'
-            rel='noreferrer'
-          >
-            Drive Docs
-          </Button>
-        <Button 
-            startIcon={<HomeIcon/>} 
-            variant='contained'
-            onClick={() => navigate('/')}
-          >
-            App Preview
-          </Button>
+            <Stack sx={{display: {xs: 'none',md: 'flex'}}} direction="row" spacing={2}>
+              <Button 
+                startIcon={<GitHubIcon/>} 
+                variant='contained'
+                href='https://github.com/davidbabaev'
+                target='_blank'
+                rel='noreferrer'
+              >
+                GitHub
+              </Button>
+            <Button 
+                startIcon={<YouTubeIcon/>} 
+                variant='contained'
+                href='https://www.youtube.com/@david_kingdom'
+                target='_blank'
+                rel='noreferrer'
+                >
+                Youtube
+              </Button>
+            <Button 
+                startIcon={<AddToDriveIcon/>} 
+                variant='contained'
+                href='https://drive.google.com/drive/folders/1h584KX_ducyfIwFz0EIE_QAz140hP7n2?usp=sharing'
+                target='_blank'
+                rel='noreferrer'
+              >
+                Drive Docs
+              </Button>
+            <Button 
+                startIcon={<HomeIcon/>} 
+                variant='contained'
+                onClick={() => navigate('/')}
+              >
+                App Preview
+              </Button>
             </Stack>
+            <Box sx={{
+                display: {xs: 'flex',md:'none'},
+                gap: 2
+              }}>
+                <IconButton
+                  href='https://github.com/davidbabaev'
+                  target='_blank'
+                  rel='noreferrer'
+                  >
+                  <GitHubIcon/>
+                </IconButton>
+        
+                <IconButton
+                  href='https://www.youtube.com/@david_kingdom'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <YouTubeIcon/>
+                </IconButton>
+        
+                <IconButton
+                  href='https://drive.google.com/drive/folders/1h584KX_ducyfIwFz0EIE_QAz140hP7n2?usp=sharing'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <AddToDriveIcon/>
+                </IconButton>
+        
+                <IconButton
+                  onClick={() => navigate('/')}
+                >
+                  <HomeIcon/>
+                </IconButton>
+              </Box>  
           </Toolbar>
         </Container>
       </AppBar>
@@ -249,15 +283,11 @@ export default function LandingPage() {
         }}
       >
         <Container maxWidth="md" sx={{ textAlign: 'center' }}>
-          <Typography sx={{fontSize:40 ,fontWeight: 700, mb: 3 }}>
+          <Typography sx={{fontSize:{xs: 30,md: 40}, lineHeight:{xs: 1.2,md: 'auto'} ,fontWeight: 700, mb: 3 }}>
             React & NodeJS - Social Media Web App
           </Typography>
           <Typography sx={{ mb: 4, opacity: 0.9, maxWidth: 760, mx: 'auto', fontSize: 14 }}>
-            Admitro - Angular Admin and Dashboard Template. With this admin template, you can
-            create stunning dashboards that will leave a lasting impression on your target viewers
-            or users. Traditionally, creating a well-structured dashboard would require starting
-            from scratch using Angular, SCSS, CSS, and TS, involving extensive coding. However,
-            with this Admin template, you can effortlessly customize your dashboard in no time.
+            Mirage is a full-stack social media platform built end-to-end as a portfolio project. Real-time messaging, photo and video sharing, profiles, feeds, follows, comments, likes, notifications, and a complete admin dashboard — all written from scratch with React, Node.js, and MongoDB.
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -315,7 +345,7 @@ export default function LandingPage() {
             component={'img'}
             src={heroImg}
             sx={{
-              width: '80%',
+              width: {xs: '100%',md:'80%'},
               height: 'auto', 
               display: 'block',
             }}
@@ -328,7 +358,7 @@ export default function LandingPage() {
         <SectionTitle
           eyebrow="DEMOS"
           title="Mirage Screenshots"
-          subtitle="Admitro - Premium Angular Admin Template comes with three beautiful dashboards and unlimited color modes, enabling users to choose their preferred mode and customize the admin template according to their preferences."
+          subtitle="A look at every major surface in the app — feed, profiles, chat, post creation, and the admin dashboards. Click any image to view it full size."
         />
 
         <ImageList cols={cols} gap={8} rowHeight={220}>
@@ -387,7 +417,7 @@ export default function LandingPage() {
           <SectionTitle
             eyebrow="MAIN TECHNOLOGIES"
             title="Tech Stack"
-            subtitle="Explore the latest trending features incorporated into the Admitro Admin template, showcasing how we have enhanced and designed our template. When it comes to design, we always keep a close watch on the most trending features."
+            subtitle="Every layer of Mirage was built with production-grade tools — from the React + Vite frontend and the Express API, to the Socket.IO real-time layer and the managed cloud services. Below is the full stack used across the project."
             light
           />
           <Box sx={{
@@ -428,7 +458,7 @@ export default function LandingPage() {
         <Container maxWidth="lg">
           <SectionTitle
             eyebrow="ABOUT THE CREATING PROCESS"
-            title="How the project has made"
+            title="How this project was built"
             subtitle="This project was built over the course of 8 months, with more than 1,200 hours of focused learning, coding, debugging, and hands-on development. To make the process transparent and prove that the project was not created with vibe coding tools or simple prompt engineering, I documented almost every part of my journey from zero. Overall, this project represents hundreds of days of consistent work, deep learning, problem solving, and real hands-on development."
           />
           <Stack spacing={2}>
@@ -491,11 +521,10 @@ export default function LandingPage() {
         </Container>
       </Box>
 
-
       {/* ============ CONTACT STRIP ============ */}
       <Box sx={{ bgcolor: PRIMARY, py: 6 }}>
         <Container maxWidth="lg">
-          <Grid container spacing={3} justifyContent="center">
+          <Grid container spacing={3} sx={{justifyContent: {xs: 'start',md: 'center'}}}>
             {[
               { icon: <Avatar src={david} />, label: 'Me', value: 'David Babaev' },
               { icon: <EmailIcon />, label: 'My Email', value: 'davidbabaev175@gmail.com' },
@@ -533,20 +562,20 @@ export default function LandingPage() {
       {/* ============ MAIN FEATURES ============ */}
       <Container maxWidth="lg" sx={{ py: 10 }}>
         <SectionTitle
-          eyebrow="MAIN FEATURES"
-          title="Admitro Angular Admin Template Main Features"
-          subtitle="The Angular Admitro Dashboard Template comes with a wealth of ready-to-use features, saving developers significant time with its array of pre-built functionalities."
+          eyebrow="WHAT'S IN THE APP"
+          title="Main Features"
+          subtitle="A snapshot of the user-facing features in Mirage. The full feature list and the permissions matrix live in the documentation."
         />
         <Grid container spacing={2}>
           {[
-            'Real-Time Chat — your Socket.IO bidirectional messaging',
-            'Photo & Video Sharing — media messages through Cloudinary',
-            'Emoji Picker — emoji-picker-react in the chat',
-            'Google Sign-In — Passport.js OAuth flow',
-            'User Profiles — profile pagesUser Pages',
-            "Posts & Feed — assumes you have a posts/feed feature, since Mirage is a social app (swap this out if it doesn't exist yet)",
-            'Private Conversations — your delete-conversation feature, framed as a privacy benefit rather than a function',
-            "Mobile Optimized — your landscape orientation overlay + responsive design",
+            'Real-Time Chat — bidirectional WebSocket messaging powered by Socket.IO',
+            'Photo & Video Sharing — image and video uploads handled by Cloudinary',
+            'Emoji Picker — built directly into the chat input',
+            'Google Sign-In — OAuth 2.0 flow via Passport.js',
+            'User Profiles — public profiles with followers, following, and full post history',
+            "Posts & Feed — personalized feed showing posts from people you follow",
+            'Private Conversations — delete a chat and it disappears for both participants in real time',
+            "Mobile Optimized — responsive layouts with a portrait-first mobile experience",
           ].map((feature) => (
             <Grid item xs={12} sm={6} key={feature}>
               <Card sx={{ p: 2.5, borderRadius: 2, boxShadow: 1 }}>
@@ -581,37 +610,33 @@ export default function LandingPage() {
         <Container maxWidth="lg">
           <Stack alignItems="center" spacing={2}>
             <Stack direction="row" spacing={1} alignItems="center">
-              <ImagePlaceholder width={32} height={32} label="Logo" radius={1} />
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                Admitro
-              </Typography>
+              <Box sx={{display: 'flex',bgcolor: 'white', borderRadius: 3, justifyContent: 'center', p:1}}>
+                <MirageLogo/>
+              </Box>
             </Stack>
             <Typography sx={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', textAlign: 'center' }}>
-              Copyright © 2025{' '}
-              <Box component="span" sx={{ color: PRIMARY, fontWeight: 600 }}>
-                Admitro
-              </Box>
-              . Designed with by{' '}
-              <Box component="span" sx={{ color: PRIMARY, fontWeight: 600 }}>
-                Spruko
-              </Box>{' '}
-              All rights reserved.
+              Mirage — built by David Babaev. React, Node.js, MongoDB, Socket.IO.
+              © 2025 David Babaev. All rights reserved
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
               <Button
                 variant="contained"
+                startIcon={<LoginIcon />}
+                onClick={() => navigate('/login')}
                 sx={{
-                  bgcolor: PRIMARY,
-                  '&:hover': { bgcolor: PRIMARY_DARK },
+                  bgcolor: '#ec4899',
+                  '&:hover': { bgcolor: '#db2777' },
                   borderRadius: 5,
                   px: 3,
                   textTransform: 'none'
                 }}
               >
-                Buy Now
+                Login
               </Button>
               <Button
                 variant="contained"
+                startIcon={<AccountCircleIcon />}
+                onClick={() => navigate('/registered')}
                 sx={{
                   bgcolor: '#10b981',
                   '&:hover': { bgcolor: '#059669' },
@@ -620,22 +645,12 @@ export default function LandingPage() {
                   textTransform: 'none'
                 }}
               >
-                Our Portfolio
+                Register
               </Button>
               <Button
                 variant="contained"
-                sx={{
-                  bgcolor: '#f59e0b',
-                  '&:hover': { bgcolor: '#d97706' },
-                  borderRadius: 5,
-                  px: 3,
-                  textTransform: 'none'
-                }}
-              >
-                Licenses
-              </Button>
-              <Button
-                variant="contained"
+                startIcon={<DescriptionIcon />}
+                onClick={() => navigate('/docs')}
                 sx={{
                   bgcolor: '#3b82f6',
                   '&:hover': { bgcolor: '#2563eb' },
@@ -644,7 +659,7 @@ export default function LandingPage() {
                   textTransform: 'none'
                 }}
               >
-                Support
+                Documentation
               </Button>
             </Stack>
           </Stack>
