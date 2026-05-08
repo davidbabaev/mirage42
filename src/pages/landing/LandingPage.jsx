@@ -434,7 +434,7 @@ export default function LandingPage() {
                     textAlign: 'center',
                     borderRadius: 3,
                     boxShadow: 2,
-                    width: {xs: 100, md: 110},
+                    width: {xs: 80, md: 110},
                     minHeight: {xs: 80, md: 100},
                     display: 'flex',
                     flexDirection: 'column',

@@ -11,9 +11,9 @@ import DocsPager from './components/DocsPager'
 export default function DocsLayout() {
 
   return (
-      <Box sx={{display: 'flex', height: '100vh'}}>
+      <Box sx={{display: 'flex', height: {xs: '100dvh',md:'100vh'}}}>
 
-        <Box sx={{height: '100vh', display:{xs: 'none', md: 'block'}}}>
+        <Box sx={{height: {xs: '100dvh',md:'100vh'}, display:{xs: 'none', md: 'block'}}}>
           <DocsSidebar/>
         </Box>
 
