@@ -30,7 +30,7 @@ The project was built solo, end-to-end — frontend, backend, database, deployme
 - **Search, sort, filter, paginate** - across users and posts, with debounced search, multi-select category filter, and active-filter chips.
 - **Light/dark theme + mobile-first design** - responsive layouts, portrait-orientation overlay for landscape phones, and an auto-hiding bottom nav on scroll.
 
-> A complete feature list and premissions matrix lives in the [project documentation](https://mirage42/docs/features)
+> A complete feature list and premissions matrix lives in the [project documentation](https://mirage42.com/docs/features)
 
 ## Screenshots
 
@@ -134,3 +134,147 @@ mirage42/
 **`frontend/`** - React 18, Vite, MUI. Pages, components, React contexts for global state (auth, posts, theme, users), custom hooks, and the API + socket service layer.
 
 **`backend/`** - Node.js, Express, Mongoose. Organized by **feature**, not by MVC layer: each featur folder (`notifications`, `chat`, `users`, `cards`) contains its own models, routes, service, helpers, and validation. Real-time chat is handled through Socket.IO event handlers running alongside the REST routes. Authentication uses Passport.js fro Google OAuth, plus JWT for session tokens.
+
+## Prerequisites
+
+before running Mirage42 locally, you'll need:
+
+**Install on your machine:**
+- [Node.js](https://nodejs.org/en) 18 or later
+- [Git](https://git-scm.com/)
+
+**Free accounts on:**
+- [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database) - for the database
+- [Cloudinary](https://cloudinary.com/) - for image and video storage
+- [Google Cloud Console](https://cloud.google.com/) - fot the the "Sign in with Google" feature
+
+## Clone & Install
+
+```bash
+git clone https://github.com/davidbabaev/mirage42.git
+cd mirage42
+
+# Install backend dependencies
+cd backend && npm install
+
+#Install frontend dependencies
+cd ../frontend && npm install
+```
+
+Both `npm install` runs may take a couple of minutes the first time.
+
+## Env vars
+
+Mirage42 uses enviorment variable to configure the database, third-party services, and authentication, the repo includes `env.example` files in both `backend/` and `frontend/` showing which variables are needed. Start by coping them:
+
+```bash
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
+(on Windows, use `copy` instead of `cp`)
+
+The **frontend** `.env` only needs one value, already filled in from the example:
+```
+VITE_API_URL=http://localhost:8181
+```
+
+No further chnages needed there.
+
+The **backend** `.env` needs real values from four services. Walk through each below.
+
+### MongoDB Atlas (`DB_CONNECTION_STRING`)
+
+1. Sign up at [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database) and create a free **M0 cluster**
+2. Add a **database user** (note the username + password).
+3. Under "Network Access" add `0.0.0.0/0` to the IP allowlist (fine for local dev).
+4. On your cluster, click **Connect → Drivers**. Atlas shows you a connection string like:
+``` 
+mongodb+srv://<db_username>:<db_password>@<cluster>.mongodb.net/?appName=YourCluster
+```
+5. Replace `<db_username>` and `<db_password>` with your real credentials, and add a database name (`mirage_dev` works):
+```
+mongodb+srv://yourname:yourpassword@yourcluster.mongodb.net/mirage_dev?appName=YourCluster
+```
+6. Paste the result into `DB_CONNECTION_STRING=` in `backend/.env`.
+
+### Cloudinary
+
+1. Sign up for free account at [Cloudinary](https://cloudinary.com/) - images and videos storage
+2. From the dashboard, open **Setting → API Keys**
+3. Copy the three values shown below into your `backend/.env`
+
+![Cloudinary API Keys page](docs/cloudinary_annotated.png)
+
+```
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
+
+### Google OAuth (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`)
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/) and create  new project (or pick an existing one)
+2. Open **APIs & Services → OAuth consent screen** and complete the setup:
+- User type: **External**
+- fill in app name, user support email, developer contact email
+- scopes: add `userinfo.email` and `userinfo.profile`
+- save through to the end
+3. Open **APIs & Services →  Credentials → Create credentials → OAuth client ID**.
+4. Application type: **Web application**. Give it any name.
+5. Add the following:
+- **Authorized JavaScript origins:** `http://localhost:5173` and `http://localhost:8181`
+- **Authorized redirect URI:** `http://localhost:8181/auth/google/callback`.
+6. Click **Create**. A popup shows your **Client ID** and **Client Secret**. Copy both info `backend/.env`:
+- `GOOGLE_CLIENT_ID` ← Client ID
+- `GOOGLE_CLIENT_SECRET` ← Client Secret
+
+### JWT secret (`JWT_SECRET`)
+
+This signs your auth tokens. it's not from any service - you generate a long random string yourself. Run this in your terminal:
+
+```bash
+openssl rand -hex 64
+```
+
+Copy the output into `backend/.env` as `JWT_SECRET`. On Windows without `openssl`, use Node instead: 
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+``` 
+
+## Seed the database
+
+Mirage42 ships with a seed script that populate your database with 12 mock users (one admin, eleven regular) and 27 mock cards. From inside `backend/`, run:
+
+```bash
+node backend/src/seed/seedScript.js
+```
+
+**Hands up:** this **wipes** any existing data in the database before reseeding, so don't run it against a database you care about.
+
+Once seeded, you can log in with:
+
+- **Regular user:** `sarah@test.com` / `Test1234!`
+- **Admin:** `david@test.com` / `Test1234!`
+
+All seeded users share the same password - see `backend/src/seed/seedScript.js` for the full list.
+
+## Run the app
+
+Mirage42 runs as two processes: the backend API on port `8181` and the frontend Vite dev server on port `5173`. Open two terminals and keep both running.
+
+**Terminal 1** - start the backend:
+
+```bash
+cd backend
+npm run dev
+```
+
+**Terminal 2** - start the frontend:
+```bash
+cd frontend
+npm run dev
+```
+
+- `cd backend` - navigates INTO the backend folder. By itself it doesn't run any code; it just chnages which directory you're in.
+- `npm run dev` - runs the dev script. But remember: npm reads the package.json of whatever folder you're currently in. So you need to be inside backend/ first for npm to find the right script.
