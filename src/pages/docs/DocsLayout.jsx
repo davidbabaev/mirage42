@@ -13,7 +13,7 @@ export default function DocsLayout() {
   return (
       <Box sx={{display: 'flex', height: {xs: '100dvh',md:'100vh'}}}>
 
-        <Box sx={{height: {xs: '100dvh',md:'100vh'}, display:{xs: 'none', md: 'block'}}}>
+        <Box sx={{height: {xs: '100dvh',md:'100vh'}, display:{xs: 'none', md: 'flex'}}}>
           <DocsSidebar/>
         </Box>
 

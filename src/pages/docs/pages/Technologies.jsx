@@ -44,18 +44,14 @@ export default function Technologies() {
     <Box sx={{display:'flex', gap: 3, flexWrap:'wrap'}}>
       <Paper 
         elevation={3}
-        sx={{p:3, borderRadius: 3,  width: 300}}
+        sx={{p:3, borderRadius: 3,  width: {xs: '100%',md:300}}}
       >
         <Typography fontSize={18} fontWeight={700}>Backend technologies</Typography>
-        <Typography fontSize={14}>
-          Welcome to Mirage42 – React & Node - Social Media Web App
-        </Typography>
         <Divider sx={{my:2}}/>
           {backend.map((item) => (
             <Box sx={{display: 'flex', pb: 0.5}}>
                 <ArrowRightIcon/>
                 <Typography sx={{fontSize: 14}}>{item.text}</Typography>
-                {/* <Typography fontSize={14} fontWeight={700}>{item.text}</Typography> */}
             </Box>
           ))}
       </Paper>
@@ -65,9 +61,6 @@ export default function Technologies() {
         sx={{p:3, borderRadius: 3}}
       >
         <Typography fontSize={18} fontWeight={700}>Frontend Technologies</Typography>
-        <Typography fontSize={14}>
-          what recources did i used for studing
-        </Typography>
         <Divider sx={{my:2}}/>
           {frontend.map((item) => (
             <Box sx={{display: 'flex', pb: 0.5}}>
@@ -98,9 +91,6 @@ export default function Technologies() {
         sx={{p:3, borderRadius: 3}}
       >
         <Typography fontSize={18} fontWeight={700}>Production Technologies</Typography>
-        <Typography fontSize={14}>
-          what recources did i used for studing
-        </Typography>
         <Divider sx={{my:2}}/>
           {production.map((item) => (
             <Box sx={{display: 'flex', pb: 0.5}}>
