@@ -25,7 +25,7 @@ The project was built solo, end-to-end — frontend, backend, database, deployme
 - **Real-time chat** - bidirectional messaging via Socket.io, with image/video shring, an emoji picker, and a WhatsApp-style mobile layout
 - **Personalized feed and social graph** - posts from people you follow, friends-of-friends suggestions, follow/unfollow, and provate favorites lists.
 - **Full admin dashboard** - analytics on users, posts, retention, demographics, and engagement, plus moderation tables with ban / promote / delete actions.
-- **Authntication** - email + password with JWT sessions, plus Google OAuth via Passport.js, with age verification and account profile editing. 
+- **Authentication** - email + password with JWT sessions, plus Google OAuth via Passport.js, with age verification and account profile editing. 
 - **Media Handling** - image and video uploads (profile, cover, posts, chat) backed by Cloudinary.
 - **Search, sort, filter, paginate** - across users and posts, with debounced search, multi-select category filter, and active-filter chips.
 - **Light/dark theme + mobile-first design** - responsive layouts, portrait-orientation overlay for landscape phones, and an auto-hiding bottom nav on scroll.
@@ -54,7 +54,7 @@ Full analytics over users, posts, retention, demographics, and engagement - plus
 
 ![Chat](docs/screenshots/adminDash.png)
 
-## Teack Stack
+## Tech Stack
 
 ### Frontend
 <p>
@@ -165,7 +165,9 @@ Both `npm install` runs may take a couple of minutes the first time.
 
 ## Env vars
 
-Mirage42 uses enviorment variable to configure the database, third-party services, and authentication, the repo includes `env.example` files in both `backend/` and `frontend/` showing which variables are needed. Start by coping them:
+Mirage42 uses enviorment variable to configure the database, third-party services, and authentication, the repo includes `env.example` files in both `backend/` and `frontend/` showing which variables are needed.
+
+Start by coping them:
 
 ```bash
 cp backend/.env.example backend/.env
@@ -181,7 +183,7 @@ VITE_API_URL=http://localhost:8181
 
 No further chnages needed there.
 
-The **backend** `.env` needs real values from four services. Walk through each below.
+The **backend** `.env` ships with working defaults for `PORT`, `CLIENT_URL`, and `SERVER_URL` - leave those alone. The other four entries need real values from external services. Walk through each below.
 
 ### MongoDB Atlas (`DB_CONNECTION_STRING`)
 
@@ -247,10 +249,10 @@ node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 Mirage42 ships with a seed script that populate your database with 12 mock users (one admin, eleven regular) and 27 mock cards. From inside `backend/`, run:
 
 ```bash
-node backend/src/seed/seedScript.js
+node src/seed/seedScript.js
 ```
 
-**Hands up:** this **wipes** any existing data in the database before reseeding, so don't run it against a database you care about.
+**Heads up:** this **wipes** any existing data in the database before reseeding, so don't run it against a database you care about.
 
 Once seeded, you can log in with:
 
