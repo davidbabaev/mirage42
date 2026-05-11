@@ -24,7 +24,7 @@ export default function DocsNavBar() {
         <Button 
             startIcon={<GitHubIcon/>} 
             variant='contained'
-            href='https://github.com/davidbabaev'
+            href='https://github.com/davidbabaev/mirage42'
             target='_blank'
             rel='noreferrer'
           >
@@ -62,7 +62,7 @@ export default function DocsNavBar() {
         gap: 2
       }}>
         <IconButton
-          href='https://github.com/davidbabaev'
+          href='https://github.com/davidbabaev/mirage42'
           target='_blank'
           rel='noreferrer'
           >
