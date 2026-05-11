@@ -102,11 +102,13 @@ export default function NavBar() {
     <AppBar 
         position='sticky'
         sx={{
+            display: {xs: isChatOpen ? 'none' : 'flex', md: 'flex'},
             bgcolor: 'background.paper',
             boxShadow: 'none',
             borderBottom: '1px solid',
             borderColor: 'divider',
             zIndex: 500
+            
         }}
     >
         <Container maxWidth='lg'>

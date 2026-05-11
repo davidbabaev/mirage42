@@ -39,7 +39,7 @@ export default function App(){
               <RotateOverlay/>
               <Box 
                 sx={{
-                  height: '100vh',
+                  height: '100dvh',
                   display: 'flex',
                   flexDirection: 'column',
                   // overflow: 'auto'
@@ -102,7 +102,6 @@ export default function App(){
                       </PublicOnlyRoute>
                     }/>
                     <Route path='/allcards' element ={<AllCardsPage/>}/>
-                    <Route path='/carddetails/:id' element ={<CardDetailsPage/>}/>
                     <Route path='/chat' element={
                         <ProtectedRoute>
                         <ChatPage/>

@@ -537,7 +537,7 @@ return (
                             sx={{
                                 borderRadius: 5
                             }}
-                            disabled={!editName.trim() || !editLastName.trim()}
+                            disabled={!(editName?? '').trim() || !(editLastName ?? '').trim()}
                             onClick={async() => {
                                 if(editCountry === ''){
                                     setError('Country is required')
